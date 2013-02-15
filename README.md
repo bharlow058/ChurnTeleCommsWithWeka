@@ -27,3 +27,8 @@ The target values (.labels files) have one example per line in the same order as
 
 The Matlab matrices are numeric. When loaded, the data matrix is called X. The categorical variables are mapped to integers. Missing values are replaced by NaN for the original numeric variables while they are mapped to 0 for categorical variables.
 
+
+Notes about the data format
+===========================
+
+The data format is absolutely dreadfull. First thing we need to do is clean it and make it into a standardised format that we can play with in other applications. At this point in time it is extremely raw and unusable. 
