@@ -32,3 +32,7 @@ Notes about the data format
 ===========================
 
 The data format is absolutely dreadfull. First thing we need to do is clean it and make it into a standardised format that we can play with in other applications. At this point in time it is extremely raw and unusable. 
+
+With regards to conversion i have come accross the following matlab scripts which import it into the system. Not if we decided on using R instead we can conver them into R.
+
+[Here](http://jmlr.csail.mit.edu/proceedings/papers/v7/supplemental/JMLRWCP_V7_supplemental.html) you can find the scripts as well as additional information about the dataset.
