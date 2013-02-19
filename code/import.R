@@ -9,7 +9,7 @@ print("[IMPORT] Done!")
 
 print("[IMPORT] Importing the test set into R as orange.test...")
 orange.test  <- read.delim("../dataset/orange_small_test.data", header=TRUE, sep="\t", fill=TRUE)
-str(orange.train)
+str(orange.test)
 print("[IMPORT] Done!")
 
 #TODO - need to clean categorical data from the dataset
