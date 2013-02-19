@@ -3,7 +3,7 @@
 # -- Importing train & test set
 
 print("[IMPORT] Importing the train set into R as orange.train...")
-orange.train <- read.delim(file.choose(), header=TRUE, sep="\t", fill=TRUE)
+orange.train <- read.delim("../dataset/orange_small_train.data", header=TRUE, sep="\t", fill=TRUE)
 str(orange.train)
 print("[IMPORT] Done!")
 
