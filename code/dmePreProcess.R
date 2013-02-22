@@ -81,14 +81,20 @@ dme.importCSV <- function(name){
 # Convert all data values which are NA to 0
 #
 # @data - data.frame (the data.frame to preprocess)
+# @groupSmallCat - boolean (true = group small categorical values together)
+# @minGroup - (minimum size of eligable categories, others will be grouped)
 # @return - data.frame (returns the processed data.frame)
 
-dme.convertNA <- function(data){
+dme.convertNA <- function(data, groupSmallCat, minGroup){
   
   print("[PREPROCESS] Cleaning out the data (NA,0)...")
   # Convert the '' to NA in the categorical attributes
 	for(i in 191:230) {
 		levels(data[[i]])[levels(data[[i]])==''] <- NA; # Convert '' to NA in cat. attr.
+    if(isTRUE(groupSmallCat)) {
+      smallCats <- names(which(table(data[[i]]) < minGroup))
+      data[[i]] <- replace(data[[i]], which(data[[i]] %in% smallCats), smallCats[1])
+    }
 		data[[i]] <- as.integer(data[[i]]);	# Convert all cat. strings to int.
 	}
   
