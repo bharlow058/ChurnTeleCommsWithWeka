@@ -3,7 +3,7 @@
 # @data - boolean (if should return the combined data)
 # @csv  - boolean (if the data should be exported to .csv)
 
-dme.importData <- function(data, csv){
+dme.importData <- function(data, csv=FALSE){
 
     print("[IMPORT] Importing the train set into R as orange.train...")
     orange.train <- read.delim("../dataset/orange_small_train.data", header=TRUE, sep="\t", fill=TRUE)
@@ -87,17 +87,26 @@ dme.convertNA <- function(data){
 # Replace all numeric data which are 0 to the average
 #
 # @data - data.frame ( the data.frame to preprocess)
+# @range - boolean (set to true if you want to also divide by the range)
 # @return - data.frame ( the data.frame with the mean replacing the zeros)
 
-dme.doAverage <- function(data){
+dme.doAverage <- function(data, range=FALSE){
   for(i in 1:length(data)){
     colmean <- mean(data[,i])
-    print(colmean)
-    
     # we create an index of the column
     col.index <- matrix(data = data[,i],nrow = 1,ncol = length(data[,i]),byrow = TRUE);
     # we use the index to replace items in the index which match our condition
     data[,i] <- replace(data[,i], col.index == 0, colmean)
+    
+    # if we select range we also divide by the range
+    if(range==TRUE){
+      colrange <- (max(data[,i]) - min(data[,i]))
+      data[,i] <- (1/colrange) * data[,i]
+    }
   }
   return(data)
 }
+
+
+
+
