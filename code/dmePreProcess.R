@@ -93,7 +93,10 @@ dme.doAverage <- function(data){
   for(i in 1:length(data)){
     colmean <- mean(data[,i])
     print(colmean)
+    
+    # we create an index of the column
     col.index <- matrix(data = data[,i],nrow = 1,ncol = length(data[,i]),byrow = TRUE);
+    # we use the index to replace items in the index which match our condition
     data[,i] <- replace(data[,i], col.index == 0, colmean)
   }
   return(data)
