@@ -68,7 +68,11 @@ dme.importCSV <- function(name){
 # @minGroup   - (minimum size of eligable categories, others will be grouped if groupCats == TRUE)
 # @return     - data.frame (returns the processed data.frame)
 
+<<<<<<< HEAD
 dme.convertNA <- function(data, groupCats=FALSE, minGroup=10){
+=======
+dme.convertNA <- function(data, groupCats = FALSE, minGroup = 10){
+>>>>>>> Convert categorical values to attributes function and parameter fix
   
   print("[PREPROCESS] Cleaning out the data (NA,0)...")
   # Convert the '' to NA in the categorical attributes
@@ -156,6 +160,27 @@ dme.attachLabels <- function(data){
     return(data)  
   }
   
+}
+
+# Convert all categorical values to attributes that are added to the data frame
+#
+# @data       - data.frame (the data.frame to preprocess)
+# @return     - data.frame (returns the processed data.frame with added attributes)
+dme.convertCatsToAttr <- function(data) {
+  for(i in 191:230) {
+    print(i)
+    cats <- names(table(data[[i]]))
+    if(length(cats) >= 3) {
+      for(j in 3:length(cats)) {
+        attrName <- paste("a",i,"c",cats[j])
+        newAttr <- rep(0,dim(data)[1])
+        newAttr[which(data[[i]] == cats[j])] <- 1
+        data[[attrName]] <- newAttr
+      }
+      data[[i]] <- replace(data[[i]], which(data[[i]] > 1), 0)
+    }
+  }
+  return(data)
 }
 
 
