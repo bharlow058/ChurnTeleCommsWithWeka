@@ -9,24 +9,7 @@ dme.importData <- function(data, csv=FALSE){
     orange.train <- read.delim("../dataset/orange_small_train.data", header=TRUE, sep="\t", fill=TRUE)
     #str(orange.train)
     print("[IMPORT] Done!")
-    
-    # Extracting the churn, appetency, upselling from the .label files
-    
-    print("[IMPORT] Importing .churn column to a new dataframe")
-    train.churn <-read.delim("../dataset/orange_small_train_churn.labels", , header=FALSE, sep="\n", fill=FALSE)
-    print("[IMPORT] Done importing churn!")
-    
-    print("[IMPORT] Importing .churn column to a new dataframe")
-    train.appatency <-read.delim("../dataset/orange_small_train_appetency.labels", , header=FALSE, sep="\n", fill=FALSE)
-    print("[IMPORT] Done importing churn!")
-    
-    print("[IMPORT] Importing .churn column to a new dataframe")
-    train.upselling <-read.delim("../dataset/orange_small_train_upselling.labels", , header=FALSE, sep="\n", fill=FALSE)
-    print("[IMPORT] Done importing churn!")
-    
-    orange.train$churn <- train.churn[,]
-    orange.train$appatency <- train.appatency[,]
-    orange.train$upselling <- train.upselling[,]
+
     
     # Export file to orange_small_train_labeled...
     
@@ -142,3 +125,39 @@ dme.doAverage <- function(data, range=FALSE){
   
   return(data)
 }
+
+# Attach labels for the training set
+#
+# @data - data.frame (the labels are added to the data.frame)
+# @return - data.frame (data.frame)
+
+dme.attachLabels <- function(data){
+    
+  # Extracting the churn, appetency, upselling from the .label files
+    
+  print("[IMPORT] Importing .churn column to a new dataframe")
+  train.churn <-read.delim("../dataset/orange_small_train_churn.labels", , header=FALSE, sep="\n", fill=FALSE)
+  print("[IMPORT] Done importing churn!")
+    
+  print("[IMPORT] Importing .churn column to a new dataframe")
+  train.appatency <-read.delim("../dataset/orange_small_train_appetency.labels", , header=FALSE, sep="\n", fill=FALSE)
+  print("[IMPORT] Done importing churn!")
+    
+  print("[IMPORT] Importing .churn column to a new dataframe")
+  train.upselling <-read.delim("../dataset/orange_small_train_upselling.labels", , header=FALSE, sep="\n", fill=FALSE)
+  print("[IMPORT] Done importing churn!")
+    
+  data$churn <- train.churn[,]
+  data$appatency <- train.appatency[,]
+  data$upselling <- train.upselling[,]
+  
+  if(data == TRUE){
+    print("The data has been returned\n")
+    return(data)  
+  }
+  
+}
+
+
+
+
