@@ -80,34 +80,41 @@ dme.importCSV <- function(name){
 
 # Convert all data values which are NA to 0
 #
-# @data - data.frame (the data.frame to preprocess)
-# @groupSmallCat - boolean (true = group small categorical values together)
-# @minGroup - (minimum size of eligable categories, others will be grouped)
-# @return - data.frame (returns the processed data.frame)
+# @data       - data.frame (the data.frame to preprocess)
+# @groupCats  - boolean (TRUE -> group infrequent categorical values together)
+# @minGroup   - (minimum size of eligable categories, others will be grouped if groupCats == TRUE)
+# @return     - data.frame (returns the processed data.frame)
 
-dme.convertNA <- function(data, groupSmallCat, minGroup){
+dme.convertNA <- function(data, groupCats, minGroup){
   
   print("[PREPROCESS] Cleaning out the data (NA,0)...")
   # Convert the '' to NA in the categorical attributes
 	for(i in 191:230) {
-		levels(data[[i]])[levels(data[[i]])==''] <- NA; # Convert '' to NA in cat. attr.
-    if(isTRUE(groupSmallCat)) {
+
+    if(isTRUE(groupCats)) {
       smallCats <- names(which(table(data[[i]]) < minGroup))
-      data[[i]] <- replace(data[[i]], which(data[[i]] %in% smallCats), smallCats[1])
+      if(length(smallCats) >= 1) {
+        if(isTRUE(any(smallCats == ''))) {
+          smallCats <- smallCats[-which(smallCats == '')] # Avoid grouping empty values with infrequeny values
+        }
+        data[[i]] <- replace(data[[i]], which(data[[i]] %in% smallCats), smallCats[1])
+      } 
     }
+
+		levels(data[[i]])[levels(data[[i]])==''] <- NA; # Convert '' to NA in cat. attr.
 		data[[i]] <- as.integer(data[[i]]);	# Convert all cat. strings to int.
 	}
   
   # For numeric values we are converting all of them to 0
 	data[is.na(data)] <- 0; # Convert all NA's to 0's
-  print("[PREPROCESS] Data has been clened!\n")
+  print("[PREPROCESS] Data has been cleaned!\n")
 	return(data);
 }
 
 # Replace all numeric data which are 0 to the average
 #
-# @data - data.frame ( the data.frame to preprocess)
-# @range - boolean (set to true if you want to also divide by the range)
+# @data   - data.frame ( the data.frame to preprocess)
+# @range  - boolean (set to true if you want to also divide by the range)
 # @return - data.frame ( the data.frame with the mean replacing the zeros)
 
 dme.doAverage <- function(data, range=FALSE){
