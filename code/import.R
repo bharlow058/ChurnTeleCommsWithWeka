@@ -15,7 +15,7 @@ print("[IMPORT] Done!")
 print("[IMPORT] Importing the labels into R as orange.train.'labelname'...")
 orange.train.appetency <- read.delim("../dataset/orange_small_train_appetency.labels", header=FALSE, sep="\n", fill=FALSE)
 orange.train.churn <- read.delim("../dataset/orange_small_train_churn.labels", header=FALSE, sep="\n", fill=FALSE)
-orange.train.upselling <- read.delim("../dataset/orange_small_train_uppselling.labels", header=FALSE, sep="\n", fill=FALSE)
+orange.train.upselling <- read.delim("../dataset/orange_small_train_upselling.labels", header=FALSE, sep="\n", fill=FALSE)
 print("[IMPORT] Done!")
 
 #TODO - need to clean categorical data from the dataset
