@@ -10,9 +10,10 @@ orange.train = dme.importData(data=TRUE)
 orange.train.NA = dme.convertNA(orange.train)
 
 # Compute the average over the data and normalize it
-
 orange.train.AVG = dme.doAverage(orange.train.NA)
 
-# Exporting data as .csv
+# Attach the labels to the data
+orange.train.labeled = dme.attachLabels(orange.train.AVG)
 
-dme.exportCSV(orange.train.AVG, "ot_norm")
+# Exporting data as .csv
+# dme.exportCSV(orange.train.AVG, "ot_norm")
