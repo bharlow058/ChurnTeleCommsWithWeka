@@ -60,10 +60,10 @@ dme.exportCSV <- function(data,name){
 # @return - data.frame (returns a dataframe with the content of the file)
 
 dme.importCSV <- function(name){
-  print(paste("[IMPORT] Importing the", name, ".csv file...")
+  print(paste("[IMPORT] Importing the", name, ".csv file..."))
   data.file <- read.delim(paste("../dataset/",name,".csv", sep=""), header=TRUE, sep="\t", fill=TRUE)  
   print("[IMPORT] Done!")
-  return data.file
+  return(data.file)
 }
 
 # Convert all data values which are NA to 0
