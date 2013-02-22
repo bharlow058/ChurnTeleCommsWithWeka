@@ -43,6 +43,18 @@ dme.importData <- function(data, csv=FALSE){
     }
 }
 
+# Exports a data frame to a .arff file
+#
+# @data - data.frame (the data.frame to export)
+# @name - string (the name of the file where the data will be exported)
+
+dme.exportARFF <- function(data, name){
+  name = paste("../dataset/", name,".arff", sep="")
+  write.arff(data, name)
+  print(paste("[EXPORT] File written to: ",name))
+}
+
+
 # Exports a data frame to a .csv file
 #
 # @data -  data.frame (the data.frame to export)
@@ -106,7 +118,3 @@ dme.doAverage <- function(data, range=FALSE){
   }
   return(data)
 }
-
-
-
-
