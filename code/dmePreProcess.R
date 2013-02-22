@@ -85,10 +85,16 @@ dme.convertNA <- function(data){
 }
 
 # Replace all numeric data which are 0 to the average
-# @data - data.frame ( the data frame to preprocess)
+#
+# @data - data.frame ( the data.frame to preprocess)
+# @return - data.frame ( the data.frame with the mean replacing the zeros)
 
 dme.doAverage <- function(data){
-  
+  for(i in 1:length(data)){
+    colmean <- mean(data[,i])
+    levels(data[[i]])[levels(data[[i]]==0)] <- colmean
+  }
+  return(data)
 }
 
 
