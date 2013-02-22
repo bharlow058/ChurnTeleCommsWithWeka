@@ -50,8 +50,20 @@ dme.importData <- function(data, csv){
 
 dme.exportCSV <- function(data,name){
   # paste concatenates strings together
-  write.csv(orange.train, past("../dataset/", name, ".csv", sep=""), row.names=FALSE)
-  print(paste("[EXPORT] Data exported to: ", "../dataset/", name, ".csv")) 
+  write.csv(orange.train, paste("../dataset/", name, ".csv", sep=""), row.names=FALSE)
+  print(paste("[EXPORT] Data exported to: ", "../dataset/", name, ".csv", sep="")) 
+}
+
+# Import data.frame froma a .csv file
+#
+# @name - string (loads that filename - it must reside in ../dataset)
+# @return - data.frame (returns a dataframe with the content of the file)
+
+dme.importCSV <- function(name){
+  print(paste("[IMPORT] Importing the", name, ".csv file...")
+  data.file <- read.delim(paste("../dataset/",name,".csv", sep=""), header=TRUE, sep="\t", fill=TRUE)  
+  print("[IMPORT] Done!")
+  return data.file
 }
 
 # Convert all data values which are NA to 0
