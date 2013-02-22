@@ -68,7 +68,7 @@ dme.importCSV <- function(name){
 # @minGroup   - (minimum size of eligable categories, others will be grouped if groupCats == TRUE)
 # @return     - data.frame (returns the processed data.frame)
 
-dme.convertNA <- function(data, groupCats, minGroup){
+dme.convertNA <- function(data, groupCats=FALSE, minGroup=10){
   
   print("[PREPROCESS] Cleaning out the data (NA,0)...")
   # Convert the '' to NA in the categorical attributes
