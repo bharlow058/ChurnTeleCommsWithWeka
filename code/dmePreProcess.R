@@ -92,21 +92,9 @@ dme.convertNA <- function(data){
 dme.doAverage <- function(data){
   for(i in 1:length(data)){
     colmean <- mean(data[,i])
-    levels(data[[i]])[levels(data[[i]]==0)] <- colmean
+    print(colmean)
+    col.index <- matrix(data = data[,i],nrow = 1,ncol = length(data[,i]),byrow = TRUE);
+    data[,i] <- replace(data[,i], col.index == 0, colmean)
   }
   return(data)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
