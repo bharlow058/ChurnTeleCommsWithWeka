@@ -2,6 +2,8 @@
 
 # Loading up the preProcessing functions.
 source("dmePreProcess.R")
+# Loading up the models (SVM for now)
+source("dmeModels.R")
 
 # Imports the training data with the 3 labels attached
 orange.train = dme.importData(data=TRUE)
@@ -17,3 +19,11 @@ orange.train.labeled = dme.attachLabels(orange.train.AVG)
 
 # Exporting data as .csv
 # dme.exportCSV(orange.train.AVG, "ot_norm")
+
+# Creating a data.frame of lables for the training set
+labels = dme.attachLabels()
+
+### DAN's SVM Model ###
+#svm.model = dmeTrainSVM(orange.train.AVG, labels$churn)
+
+
