@@ -33,12 +33,12 @@ dme.importData <- function(data, csv=FALSE){
     if(csv == TRUE){
       print("[EXPORT] Exporting the trained labeled dataset as a .csv file...")
       write.csv(orange.train, "../dataset/orange_small_train_labeled.csv", row.names=FALSE)
-      print("[EXPORT] Done exporting!")
+      print("[EXPORT] Done exporting!\n")
       
     }
 
     if(data == TRUE){
-      print("The data has been returned")
+      print("The data has been returned\n")
       return(orange.train)  
     }
 }
@@ -51,7 +51,7 @@ dme.importData <- function(data, csv=FALSE){
 dme.exportARFF <- function(data, name){
   name = paste("../dataset/", name,".arff", sep="")
   write.arff(data, name)
-  print(paste("[EXPORT] File written to: ",name))
+  print(paste("[EXPORT] File written to: ",name, "\n",sep=""))
 }
 
 
@@ -63,7 +63,7 @@ dme.exportARFF <- function(data, name){
 dme.exportCSV <- function(data,name){
   # paste concatenates strings together
   write.csv(orange.train, paste("../dataset/", name, ".csv", sep=""), row.names=FALSE)
-  print(paste("[EXPORT] Data exported to: ", "../dataset/", name, ".csv", sep="")) 
+  print(paste("[EXPORT] Data exported to: ", "../dataset/", name, ".csv\n", sep="")) 
 }
 
 # Import data.frame froma a .csv file
@@ -74,7 +74,7 @@ dme.exportCSV <- function(data,name){
 dme.importCSV <- function(name){
   print(paste("[IMPORT] Importing the", name, ".csv file..."))
   data.file <- read.delim(paste("../dataset/",name,".csv", sep=""), header=TRUE, sep="\t", fill=TRUE)  
-  print("[IMPORT] Done!")
+  print("[IMPORT] Done!\n")
   return(data.file)
 }
 
@@ -85,6 +85,7 @@ dme.importCSV <- function(name){
 
 dme.convertNA <- function(data){
   
+  print("[PREPROCESS] Cleaning out the data (NA,0)...")
   # Convert the '' to NA in the categorical attributes
 	for(i in 191:230) {
 		levels(data[[i]])[levels(data[[i]])==''] <- NA; # Convert '' to NA in cat. attr.
@@ -93,6 +94,7 @@ dme.convertNA <- function(data){
   
   # For numeric values we are converting all of them to 0
 	data[is.na(data)] <- 0; # Convert all NA's to 0's
+  print("[PREPROCESS] Data has been clened!\n")
 	return(data);
 }
 
@@ -103,6 +105,8 @@ dme.convertNA <- function(data){
 # @return - data.frame ( the data.frame with the mean replacing the zeros)
 
 dme.doAverage <- function(data, range=FALSE){
+  
+  print("[PREPROCESS] Normalizing the data by the mean...")
   for(i in 1:length(data)){
     colmean <- mean(data[,i])
     # we create an index of the column
@@ -116,5 +120,12 @@ dme.doAverage <- function(data, range=FALSE){
       data[,i] <- (1/colrange) * data[,i]
     }
   }
+  
+  if(range==TRUE){
+      print("[PREPROCESS] Data normalised by the mean/range.\n")
+    }else{
+      print("[PREPROCESS] Data normalised by the mean.\n")
+  }
+  
   return(data)
 }
