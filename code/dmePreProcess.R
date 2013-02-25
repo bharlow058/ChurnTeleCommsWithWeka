@@ -2,8 +2,9 @@
 # 
 # @data - boolean (if should return the combined data)
 # @csv  - boolean (if the data should be exported to .csv)
+# @binary - boolean (exports the data to a binary format)
 
-dme.importData <- function(data, csv=FALSE){
+dme.importData <- function(data, csv=FALSE, binary=FALSE){
 
     print("[IMPORT] Importing the train set into R as orange.train...")
     orange.train <- read.delim("../dataset/orange_small_train.data", header=TRUE, sep="\t", fill=TRUE)
@@ -18,6 +19,11 @@ dme.importData <- function(data, csv=FALSE){
       write.csv(orange.train, "../dataset/orange_small_train_labeled.csv", row.names=FALSE)
       print("[EXPORT] Done exporting!\n")
       
+    }
+    
+    if(binary == TRUE){
+      cat("[EXPORT] Exporting the data to binary in var/...\n")
+      save(orange.train, file='var/orange_train.Rda')
     }
 
     if(data == TRUE){
@@ -63,21 +69,28 @@ dme.importCSV <- function(name){
 
 # Convert all data values which are NA to 0
 #
-# @data       - data.frame (the data.frame to preprocess)
+# @orange.train.NA       - data.frame (the data.frame to preprocess)
+# @binary     - boolean (exporting the data to a binary format)
 # @return     - data.frame (returns the processed data.frame)
-dme.convertNA <- function(data){
+dme.convertNA <- function(orange.train.NA, binary=FALSE){
   
   print("[PREPROCESS] Cleaning out the data (NA,0)...")
   # Convert the '' to NA in the categorical attributes
 	for(i in 191:230) {
-		levels(data[[i]])[levels(data[[i]])==''] <- NA; # Convert '' to NA in cat. attr.
-		data[[i]] <- as.integer(data[[i]]);	# Convert all cat. strings to int.
+		levels(orange.train.NA[[i]])[levels(orange.train.NA[[i]])==''] <- NA; # Convert '' to NA in cat. attr.
+		orange.train.NA[[i]] <- as.integer(orange.train.NA[[i]]);	# Convert all cat. strings to int.
 	}
   
   # For numeric values we are converting all of them to 0
-	data[is.na(data)] <- 0; # Convert all NA's to 0's
+	orange.train.NA[is.na(orange.train.NA)] <- 0; # Convert all NA's to 0's
   print("[PREPROCESS] Data has been cleaned!\n")
-	return(data);
+  
+  if(binary == TRUE){
+    cat("[EXPORT] Exporting data to binary in var/...")
+    save(orange.train.NA, file="var/orange_train_NA.Rda")
+  }
+  
+	return(orange.train.NA);
 }
 
 # Group together categorical values that are infrequent
@@ -100,22 +113,23 @@ dme.groupCats <- function(data, minCatFreq) {
 #
 # @data   - data.frame ( the data.frame to preprocess)
 # @range  - boolean (set to true if you want to also divide by the range)
+# @binary - boolean (exporting the data to a binary format)
 # @return - data.frame ( the data.frame with the mean replacing the zeros)
 
-dme.doAverage <- function(data, range=FALSE){
+dme.doAverage <- function(orange.train.AVG, range=FALSE, binary=FALSE){
   
   print("[PREPROCESS] Normalizing the data by the mean...")
-  for(i in 1:length(data)){
-    colmean <- mean(data[,i])
+  for(i in 1:length(orange.train.AVG)){
+    colmean <- mean(orange.train.AVG[,i])
     # we create an index of the column
-    col.index <- matrix(data = data[,i],nrow = 1,ncol = length(data[,i]),byrow = TRUE);
+    col.index <- matrix(data = orange.train.AVG[,i],nrow = 1,ncol = length(orange.train.AVG[,i]),byrow = TRUE);
     # we use the index to replace items in the index which match our condition
-    data[,i] <- replace(data[,i], col.index == 0, colmean)
+    orange.train.AVG[,i] <- replace(orange.train.AVG[,i], col.index == 0, colmean)
     
     # if we select range we also divide by the range
     if(range==TRUE){
-      colrange <- (max(data[,i]) - min(data[,i]))
-      data[,i] <- (1/colrange) * data[,i]
+      colrange <- (max(orange.train.AVG[,i]) - min(orange.train.AVG[,i]))
+      orange.train.AVG[,i] <- (1/colrange) * orange.train.AVG[,i]
     }
   }
   
@@ -125,7 +139,13 @@ dme.doAverage <- function(data, range=FALSE){
       print("[PREPROCESS] Data normalised by the mean.\n")
   }
   
-  return(data)
+  if(binary==TRUE){
+    cat("[EXPORT] Exporting data to binary in var/...")
+    save(orange.train.AVG, file='var/orange_train_AVG.Rda')
+  }
+  
+  
+  return(orange.train.AVG)
 }
 
 # Attach labels for the training set
@@ -148,18 +168,20 @@ dme.attachLabels <- function(data=TRUE){
   print("[IMPORT] Importing .upselling column to a new dataframe")
   train.upselling <-read.delim("../dataset/orange_small_train_upselling.labels", , header=FALSE, sep="\n", fill=FALSE)
   print("[IMPORT] Done importing upselling")
-    
+      
+  answer <- data.frame(churn=integer(50000), appatency=integer(50000), upselling=integer(50000))
+  
   answer$churn <- train.churn[,]
   answer$appatency <- train.appatency[,]
   answer$upselling <- train.upselling[,]
   
   if(data == TRUE){
     print("The data has been returned\n")
-    return(data)  
+    return(answer)  
   }
 }
 
-dme.importTest <- function(data, csv=FALSE){
+dme.importTest <- function(data, csv=FALSE, binary=FALSE){
   print("[IMPORT] Importing the train set into R as orange.train...")
   orange.test <- read.delim("../dataset/orange_small_test.data", header=TRUE, sep="\t", fill=TRUE)
   #str(orange.train)
@@ -179,6 +201,12 @@ dme.importTest <- function(data, csv=FALSE){
     print("The data has been returned\n")
     return(orange.test)  
   }
+  
+  if(binary == TRUE){
+    cat("[EXPORT] Exporting data to binary in var/...")
+    save(orange.test, file='var/orange_test.Rda')
+  }
+  
 }
 
 # Convert all categorical values to attributes that are added to the data frame
@@ -220,6 +248,7 @@ dme.convertToBinary <- function(data){
   print("[PREPROCESS] Finished converting data to binary...")
   return(data)
 }
+
 
 
 
