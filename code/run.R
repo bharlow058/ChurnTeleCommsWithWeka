@@ -15,7 +15,7 @@ orange.train.NA = dme.convertNA(orange.train)
 orange.train.AVG = dme.doAverage(orange.train.NA)
 
 # Attach the labels to the data
-orange.train.labeled = dme.attachLabels(orange.train.AVG)
+#orange.train.labeled = dme.attachLabels(orange.train.AVG)
 
 # Exporting data as .csv
 # dme.exportCSV(orange.train.AVG, "ot_norm")
