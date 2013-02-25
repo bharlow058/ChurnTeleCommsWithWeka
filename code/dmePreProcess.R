@@ -64,26 +64,12 @@ dme.importCSV <- function(name){
 # Convert all data values which are NA to 0
 #
 # @data       - data.frame (the data.frame to preprocess)
-# @groupCats  - boolean (TRUE -> group infrequent categorical values together)
-# @minGroup   - (minimum size of eligable categories, others will be grouped if groupCats == TRUE)
 # @return     - data.frame (returns the processed data.frame)
-
-dme.convertNA <- function(data, groupCats=FALSE, minGroup=10){
+dme.convertNA <- function(data){
   
   print("[PREPROCESS] Cleaning out the data (NA,0)...")
   # Convert the '' to NA in the categorical attributes
 	for(i in 191:230) {
-
-    if(isTRUE(groupCats)) {
-      smallCats <- names(which(table(data[[i]]) < minGroup))
-      if(length(smallCats) >= 1) {
-        if(isTRUE(any(smallCats == ''))) {
-          smallCats <- smallCats[-which(smallCats == '')] # Avoid grouping empty values with infrequeny values
-        }
-        data[[i]] <- replace(data[[i]], which(data[[i]] %in% smallCats), smallCats[1])
-      } 
-    }
-
 		levels(data[[i]])[levels(data[[i]])==''] <- NA; # Convert '' to NA in cat. attr.
 		data[[i]] <- as.integer(data[[i]]);	# Convert all cat. strings to int.
 	}
@@ -92,6 +78,22 @@ dme.convertNA <- function(data, groupCats=FALSE, minGroup=10){
 	data[is.na(data)] <- 0; # Convert all NA's to 0's
   print("[PREPROCESS] Data has been cleaned!\n")
 	return(data);
+}
+
+# Group together categorical values that are infrequent
+#
+# @minCatFreq   - (minimum frequency of eligable categories, infrequent ones will be grouped together
+dme.groupCats <- function(data, minCatFreq) {
+  for(i in 191:230) {
+    smallCats <- names(which(table(data[[i]]) < minCatFreq))
+    if(length(smallCats) >= 1) {
+      if(isTRUE(any(smallCats == 0))) {
+        smallCats <- smallCats[-which(smallCats == 0)] # Avoid grouping empty values with infrequeny values
+      }
+      data[[i]] <- replace(data[[i]], which(data[[i]] %in% smallCats), smallCats[1])
+    } 
+  }
+  return(data)
 }
 
 # Replace all numeric data which are 0 to the average
@@ -139,13 +141,13 @@ dme.attachLabels <- function(data=TRUE){
   train.churn <-read.delim("../dataset/orange_small_train_churn.labels", , header=FALSE, sep="\n", fill=FALSE)
   print("[IMPORT] Done importing churn!")
     
-  print("[IMPORT] Importing .churn column to a new dataframe")
+  print("[IMPORT] Importing .appetency column to a new dataframe")
   train.appatency <-read.delim("../dataset/orange_small_train_appetency.labels", , header=FALSE, sep="\n", fill=FALSE)
-  print("[IMPORT] Done importing churn!")
+  print("[IMPORT] Done importing appetency!")
     
-  print("[IMPORT] Importing .churn column to a new dataframe")
+  print("[IMPORT] Importing .upselling column to a new dataframe")
   train.upselling <-read.delim("../dataset/orange_small_train_upselling.labels", , header=FALSE, sep="\n", fill=FALSE)
-  print("[IMPORT] Done importing churn!")
+  print("[IMPORT] Done importing upselling")
     
   answer$churn <- train.churn[,]
   answer$appatency <- train.appatency[,]
@@ -179,6 +181,45 @@ dme.importTest <- function(data, csv=FALSE){
   }
 }
 
+# Convert all categorical values to attributes that are added to the data frame
+#
+# @data       - data.frame (the data.frame to preprocess)
+# @return     - data.frame (returns the processed data.frame with added attributes)
+dme.convertCatsToAttr <- function(data) {
+  for(i in 191:230) {
+    cats <- names(table(data[[i]]))
+    cat(i, "-", length(cats))
+    if(length(cats) >= 3) {
+      for(j in 3:length(cats)) {
+        attrName <- paste("a",i,"c",cats[j])
+        newAttr <- rep(0,dim(data)[1])
+        newAttr[which(data[[i]] == cats[j])] <- 1
+        data[[attrName]] <- newAttr
+      }
+      data[[i]] <- replace(data[[i]], which(data[[i]] > 1), 0)
+    }
+  }
+  return(data)
+}
+
+# Convert all attributes to binary values
+#
+# @data       - data.frame (the data.frame to preprocess)
+# @return     - data.frame (returns the processed data.frame binary attributes)
+dme.convertToBinary <- function(data){
+  
+  print("[PREPROCESS] Converting data to binary...")
+  for(i in 1:length(data)){
+    print(i)
+    # we create an index of the column
+    col.index <- matrix(data = data[,i],nrow = 1,ncol = length(data[,i]),byrow = TRUE);
+    # we use the index to replace items in the index which match our condition
+    data[,i] <- replace(data[,i], col.index != 0, 1)
+    
+  }
+  print("[PREPROCESS] Finished converting data to binary...")
+  return(data)
+}
 
 
 
