@@ -131,7 +131,7 @@ dme.doAverage <- function(data, range=FALSE){
 # @data - data.frame (the labels are added to the data.frame)
 # @return - data.frame (data.frame)
 
-dme.attachLabels <- function(data){
+dme.attachLabels <- function(data=TRUE){
     
   # Extracting the churn, appetency, upselling from the .label files
     
@@ -147,15 +147,36 @@ dme.attachLabels <- function(data){
   train.upselling <-read.delim("../dataset/orange_small_train_upselling.labels", , header=FALSE, sep="\n", fill=FALSE)
   print("[IMPORT] Done importing churn!")
     
-  data$churn <- train.churn[,]
-  data$appatency <- train.appatency[,]
-  data$upselling <- train.upselling[,]
+  answer$churn <- train.churn[,]
+  answer$appatency <- train.appatency[,]
+  answer$upselling <- train.upselling[,]
   
   if(data == TRUE){
     print("The data has been returned\n")
     return(data)  
   }
-  
+}
+
+dme.importTest <- function(data, csv=FALSE){
+  print("[IMPORT] Importing the train set into R as orange.train...")
+  orange.test <- read.delim("../dataset/orange_small_test.data", header=TRUE, sep="\t", fill=TRUE)
+  #str(orange.train)
+  print("[IMPORT] Done!")
+
+    
+  # Export file to orange_small_train_labeled...
+    
+  if(csv == TRUE){
+    print("[EXPORT] Exporting the trained labeled dataset as a .csv file...")
+    write.csv(orange.test, "../dataset/orange_small_test_labeled.csv", row.names=FALSE)
+    print("[EXPORT] Done exporting!\n")
+      
+  }
+
+  if(data == TRUE){
+    print("The data has been returned\n")
+    return(orange.test)  
+  }
 }
 
 
