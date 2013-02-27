@@ -235,7 +235,6 @@ dme.convertCatsToAttr <- function(data) {
 # @data       - data.frame (the data.frame to preprocess)
 # @return     - data.frame (returns the processed data.frame binary attributes)
 dme.convertToBinary <- function(data){
-  
   print("[PREPROCESS] Converting data to binary...")
   for(i in 1:length(data)){
     print(i)
@@ -249,6 +248,40 @@ dme.convertToBinary <- function(data){
   return(data)
 }
 
+# Split data and labels into balanced training and test sets
+#
+# @data       - data.frame (the data.frame to split in test and training set)
+# @labels     - data.frame (the corresponding labels that are split in test and training)
+# @return     - list (returns a list containing the data and labels for both train and test
+#               To extract the elements from the list use the following: 
+#                 trainData <- split[1]$TrainData
+#                 testData <- split[2]$TestData
+#                 trainLabels <- split[3]$TrainLabels
+#                 testLabels <- split[4]$TestLabels)
+dme.splitData <- function(data, labels) {
+  print("[PREPROCESS] Splitting data to train and test...")
+  classBalance <- cbind(length(which(labels == -1)), length(which(labels == 1))) / length(labels[,])
+  
+  posInd <- which(labels == 1)
+  negInd <- which(labels == -1)
 
+  set.seed(1234)
+  posInd <- sample(posInd)
+  negInd <- sample(negInd)
+
+  posIndSplit <- floor(length(posInd) * 0.8)
+  negIndSplit <- floor(length(negInd) * 0.8)
+
+  trainInd <- cbind(t(posInd[1:posIndSplit]), t(negInd[1:negIndSplit]))
+  testInd <- cbind(t(posInd[(posIndSplit+1):length(posInd)]), t(negInd[(negIndSplit+1):length(negInd)]))
+
+  trainData <- data[trainInd,]
+  testData <- data[testInd,]
+  trainLabels <- factor(labels[trainInd])
+  testLabels <- factor(labels[testInd])
+
+  print("[PREPROCESS] Finished splitting data to train and test")
+  list(TrainData=trainData, TestData=testData, TrainLabels=trainLabels, TestLabels=testLabels)
+}
 
 
