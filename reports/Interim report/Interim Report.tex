@@ -48,9 +48,11 @@ Maria Alexandra Alecu (STUDENT NUMBER)}
 	\item Familiarized ourselves with Naive Bayes, SVMs, and Decision Trees.  
 \end{itemize}
 
-The data we have chosen for this project is the Orange telecom customer behaviour dataset. We have been provided with a labelled training set for the data focusing on predicting the customer churn(switch providers), appetancy(tendancy to buy new products) or purcahse upgrades. To respect customer privacy, both the order of the customers as well as the variables in the dataset have been shuffled.
+The data we have chosen for this project is the Orange telecom customer behaviour dataset. We have been provided with a labelled training set for the data focusing on predicting the customer churn(switch providers), appetancy(tendancy to buy new products) or purcahse upgrades. Given the proposed dataset, we are looking at solving a classifcation problem.  To respect customer privacy, both the order of the customers as well as the variables in the dataset have been shuffled.
 
-After inspecting the data, we have identified that i contains both numerical and categorical values. We began with preprocessing the numerical data. We replaced all the entries that were empty with zero. Secondly we replaced the zero entries with the mean of the values of each variable in the dataset. In the case of the categorical data, we changed the empty strings to Not Available. We then converted all the strings to numeric values so we can handle data operations easier.
+After inspecting the data, we have identified that i contains both numerical and categorical values. We R to explore as well as preprocess the data. We began with preprocessing the numerical data. We replaced all the entries that were empty with zero. Secondly we replaced the zero entries with the mean of the values of each variable in the dataset. In the case of the categorical data, we changed the empty strings to Not Available. We then converted all the strings to numeric values so we can handle data operations easier.
+
+We began experimenting with a series of algorithms in order to figure out which ones would perform better. We looked at employing SVMs but we quickly abandoned the idea as they would require a higher computational requirement than other methods.
 
 \section*{What we plan on doing:}
 \begin{itemize}
@@ -58,6 +60,8 @@ After inspecting the data, we have identified that i contains both numerical and
 	\item Familiarize ourselves with more classifiers.
 	\item Compare the performance of the classifiers with the criteria described below.
 \end{itemize}
+
+We plan experiment with a linear classification method, more exactly, employing logistic regression methods. 
 
 \section*{What comparisons we want to run:}
 \begin{itemize}
