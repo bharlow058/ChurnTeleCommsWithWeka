@@ -1,9 +1,9 @@
-# This script will be used to import all the data, preprocess it and export it to .csv or .arff for weka use.
-
-# Loading up the preProcessing functions.
+## This script will be used to import all the data, preprocess it and export it to .csv or .arff for weka use.
+#
+## Loading up the preProcessing functions.
 source("dmePreProcess.R")
 # Loading up the models (SVM for now)
-# source("dmeModels.R")
+source("dmeModels.R")
 
 # Imports the training data with the 3 labels attached
 orange.train <- dme.importData(data=TRUE)
@@ -25,6 +25,5 @@ orange.train.AVG <- dme.doAverage(orange.train.NA)
 labels <- dme.attachLabels()
 
 ### DAN's SVM Model ###
-#svm.model = dmeTrainSVM(orange.train.AVG, labels$churn)
-
+svm.model = dmeTrainSVM(orange.train.AVG, labels$churn)
 
