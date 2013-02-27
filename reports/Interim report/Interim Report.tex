@@ -37,6 +37,8 @@ Maria Alexandra Alecu (STUDENT NUMBER)}
     
 \maketitle
 
+
+
 % CONTENT
 \section*{What we have done so far:}
 \begin{itemize}
@@ -54,6 +56,23 @@ After inspecting the data, we have identified that i contains both numerical and
 
 We began experimenting with a series of algorithms in order to figure out which ones would perform better. We looked at employing SVMs but we quickly abandoned the idea as they would require a higher computational requirement than other methods.
 
+\subsection*{Decision trees - what we have done so far}
+	We have implemented decision trees using the package "rpart" from R and tested it on the \textbf{pre-processed} data, using the first \textbf{50 features} of the data set. \\
+	As an \textbf{evaluation} of this classifier, we have used the following methods:
+	\begin{itemize}
+		\item 2-fold cross validation
+		\item the "printcp" function available in the "rpart" package. This function gives the error from 10-fold cross validation performed on the data set, using different values for the number of nodes in the decision tree. 
+	\end{itemize}
+	The \textbf{results} we obtained are as follows:
+	\begin{itemize}
+		\item With 2-fold cross validation, we obtained a very good accuracy, namely of 91%.
+		\item The results from the "printcp" function seem to contradict this result, in the sense that this function shows that no matter how many nodes we include in our decision tree, there is no decision tree that fits the data.
+	\end{itemize}
+	
+	
+	
+	
+
 \section*{What we plan on doing:}
 \begin{itemize}
 	\item See which pre-processing techniques and features work best for different classifiers.
@@ -63,12 +82,25 @@ We began experimenting with a series of algorithms in order to figure out which 
 
 We plan experiment with a linear classification method, more exactly, employing logistic regression methods. If there is time, a look into a mixture of gaussians to model the date will be attempted. 
 
+\subsection*{Decision trees - what we plan on doing}
+ 	From the \textbf{data set} point of view, our goals are the following:
+ 	\begin{itemize}
+ 		\item  use the same functions on the \textbf{unprocessed} data (since decision trees can handle missing data and categorical data)
+ 		\item use \textbf{all the features} of the data set
+ 		\item perform cross-validation using \textbf{more folds}.
+ 	\end{itemize}
+In what concerns the \textbf{methods} we want to use, our main goal is to use the classifiers we obtained at the previous step in \textbf{ensemble} methods, such as \textbf{random forests}, \textbf{bagging} and \textbf{boosting}. We plan to use the built-in function in R, such as "cforest" and also experiment with the same functions in Weka.
+
+
+
+
+
 \section*{What comparisons we want to run:}
+
 \begin{itemize}
 	\item Split data up randomly: 80\% of instances will be the training set and 20\% the test set.
 	\item Perform 5-fold cross-validation on the training set and do final evaluation on the test set.
 	\item For each classifier we store their accuracy, confusion matrix, ROC curve and AUC.
 \end{itemize}
-
 
 \end{document}
