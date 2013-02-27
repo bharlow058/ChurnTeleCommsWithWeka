@@ -15,18 +15,28 @@ nbClassifier <- function(train, labels, test) {
 	epsilon <- 0.0000000001; # Add noise
 	logpi <- N_c / sum(N_c); # Prior prob. of each label
 	logtheta <- (N_jc / N_c) + epsilon;
+	logtheta[which(logtheta >= 1)] <- 0.999999
 	print("... Finished training model!")
 
 	print("Predicting labels on test data...")
 	L_ic <- matrix(0, dim(test)[1], 2);
 	for(i in 1:2) {
 		L_ic[,i] <- logpi[i];
-		L_ic[,i] <- L_ic[,i] + colSums(log(1 - logtheta[,i]));
+		L_ic[,i] <- L_ic[,i] + sum(log(1 - logtheta[,i]));
 		L_ic[,i] <- L_ic[,i] + test %*% log(logtheta[,i]) - test %*% log(1 - logtheta[,i]);
 	}
-	p_ic <- c(exp(L_ic[,0] - log(exp(L_ic[,0] + L_ic[,1]))),
-				exp(L_ic[,1] - log(exp(L_ic[,0] + L_ic[,1]))));
-	y_hat <- which(apply(p_ic,1,max) == p_ic)
+	p_ic <- cbind(exp(L_ic[,1] - log(exp(L_ic[,1] + L_ic[,2]))),
+				exp(L_ic[,2] - log(exp(L_ic[,1] + L_ic[,2]))));
+
+	p_ic <- cbind(exp(L_ic[,1] - log(sum(exp(L_ic[,1] - max(L_ic[,1])), 
+								exp(L_ic[,2] - max(L_ic[,2])))) + max(L_ic[,1]) + max(L_ic[,2])),
+			exp(L_ic[,2] - log(sum(exp(L_ic[,1] - max(L_ic[,1])), 
+								exp(L_ic[,2] - max(L_ic[,2])))) + max(L_ic[,1]) + max(L_ic[,2])))
+
+	y_hat <- apply(p_ic,1,which.max)
+	y_hat[which(y_hat == 1)] <- -1
+	y_hat[which(y_hat == 2)] <- 1
+	table(pred = y_hat, true = train.churn[,1])
 	print("...Finished predicting!")
 	return(y_hat)
 }
