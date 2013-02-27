@@ -11,7 +11,7 @@
 \usepackage{pgfplots}
 \usepackage{color}
 \usepackage{comment}
-\usepackage[hmargin=2cm,vmargin=2cm]{geometry}
+\usepackage[hmargin=1cm,vmargin=1cm]{geometry}
 
 % Töfluredding
 % allows for temporary adjustment of side margins
@@ -39,10 +39,28 @@ Maria Alexandra Alecu (STUDENT NUMBER)}
 
 % CONTENT
 \section*{What we have done so far:}
+\begin{itemize}
+	\item Pre-processing:
+	\begin{itemize}
+		\item Replaced missing values with both zeros and mean values.
+		\item Converted the dataset to a binary bag-of-features.
+	\end{itemize}
+	\item Familiarized ourselves with Naive Bayes, SVMs, and Decision Trees.
+\end{itemize}
 
 \section*{What we plan on doing:}
+\begin{itemize}
+	\item See which pre-processing techniques and features work best for different classifiers.
+	\item Familiarize ourselves with more classifiers.
+	\item Compare the performance of the classifiers with the criteria described below.
+\end{itemize}
 
 \section*{What comparisons we want to run:}
+\begin{itemize}
+	\item Split data up randomly: 80\% of instances will be the training set and 20\% the test set.
+	\item Perform 5-fold cross-validation on the training set and do final evaluation on the test set.
+	\item For each classifier we store their accuracy, confusion matrix, ROC curve and AUC.
+\end{itemize}
 
 
 \end{document}
