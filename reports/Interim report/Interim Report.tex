@@ -33,23 +33,21 @@
 \title{Data Mining and Exploration\\Interim Report}
 \author{Thorvaldur Helgason (s1237131) \\
 Daniel Stanoescu (s0838600) \\
-Maria Alexandra Alecu (STUDENT NUMBER)}
+Maria Alexandra Alecu (s1255964)}
 \pagestyle{fancy}
 
 \begin{document}
     
 \maketitle
 
-
-
 % CONTENT
 \section*{What we have done so far:}
 \subsection*{Data}
-The data we have chosen for this project is the Orange telecom customer behaviour dataset. We have been provided with a labelled training set and unlabeled test set for the data focusing on predicting the customer churn (switch providers), appetancy (tendancy to buy new products) or purchase upgrades. Given the proposed dataset, we are looking at solving a classification problem.  To respect customer privacy, both the order of the customers as well as the variables in the dataset have been shuffled.
+The data we have chosen for this project is the Orange telecom customer marketing database. We have been provided with a labelled training set and unlabeled test set for the data focusing on predicting the following three target values: customer churn (switch providers), appetancy (tendancy to buy new products) or purchase upgrades. Given the proposed dataset, we are aiming at solving a classification problem. To respect customer privacy, both the order of the customers as well as the variables in the dataset have been shuffled.
 
-There are two datasets for this task, one small with 230 features and another big with 15000 features. We have decided to work solely on the small dataset to begin with because of lack of proper computational resources, but we might try working on the big dataset later given time. Also, we are only going to be using the training data and labels because we do not have labels for the test data and can therefore not use it for evaluation. Instead we are splitting the training data and labels up so 80\% of it will be our training data and 20\% our test data. We also make sure that the split is balanced in terms of classes.
+There are two datasets for this task, one small with 230 features and another big with 15000 features. We have decided to work solely on the small dataset to begin with because of the lack of proper computational resources, but we might try working with the big dataset if there will be time. Also, we are only going to be using the training data and labels because we do not have labels for the test data and can therefore not use it for evaluation purposes. Instead we are splitting the labeled training set up so 80\% of it will be used for training our classifier and 20\% of the date to evaluate it. We also make sure that the split is balanced in terms of classes.
 
-After inspecting the data, we have identified that it contains both numerical and categorical values. We used R to explore as well as preprocess the data. We began with preprocessing the numerical data. We replaced all the entries that were empty with zero. Secondly we replaced the zero entries with the mean of the values of each variable in the dataset. In the case of the categorical data, we changed the empty strings to Not Available. We then converted all the strings to numeric values so we can handle data operations easier. Additionally, we created a binary bag-of-features dataset that was specifically created to see if it would work better with the Naive Bayes classifier. 
+After inspecting the data, we have identified that it contains both numerical and categorical values. We used R to explore as well as preprocess the data. We began with preprocessing the numerical data. We replaced all the entries that were empty with zero. Secondly we replaced the zero entries with the mean of the values of each variable in the dataset. In the case of the categorical data, we changed the empty strings to Not Available. We then converted all the strings to numeric values so we could handle data operations easier. Additionally, we created a binary bag-of-features dataset to see if it would work better with the Naive Bayes classifier. 
 
 
 \subsection*{Classifiers}
