@@ -30,7 +30,7 @@
 \usepackage{float}
 \restylefloat{table}
 
-\title{Data Mining and Exploration\\Interim Report}
+\title{Data Mining and Exploration - Interim Report}
 \author{Thorvaldur Helgason (s1237131) \\
 Daniel Stanoescu (s0838600) \\
 Maria Alexandra Alecu (s1255964)}
@@ -51,55 +51,41 @@ After inspecting the data, we have identified that it contains both numerical an
 
 
 \subsection*{Classifiers}
-We began experimenting with a series of algorithms in order to figure out which ones would perform better. We looked at employing SVMs but we quickly abandoned the idea as they would require a higher computational requirement than other methods. We have also familiarized ourselves with Naive Bayes and Decision Trees.
+We began experimenting with a series of algorithms in order to figure out which ones would perform better. We looked at employing \textbf{SVMs} but we quickly abandoned the idea as they would require a higher computational requirement than other methods. We have also familiarized ourselves with Naive Bayes and Decision Trees.
 
-We are looking at Naive Bayes because that was used as a basis in the competition and we want to create our own baseline for our modified dataset. So far, it looks like Naive Bayes is performing better on the raw and binary datasets than the ones were missing values are replaced, although the overall performance is pretty poor (AUC $\sim$ 0.5).
+We are looking at \textbf{Naive Bayes} because that was used as a basis in the competition and we want to create our own baseline for our modified dataset. So far, it looks like Naive Bayes is performing better on the raw and binary datasets than the ones were missing values are replaced, although the overall performance is pretty poor (AUC $\sim$ 0.5).
 
 
-\subsubsection*{Decision trees - what we have done so far}
-	We have implemented decision trees using the package "rpart" from R and tested it on the \textbf{pre-processed} data, using the first \textbf{50 features} of the data set. \\
-	As an \textbf{evaluation} of this classifier, we have used the following methods:
-	\begin{itemize}
-		\item 2-fold cross validation
-		\item the "printcp" function available in the "rpart" package. This function gives the error from 10-fold cross validation performed on the data set, using different values for the number of nodes in the decision tree. 
-	\end{itemize}
-	The \textbf{results} we obtained are as follows:
-	\begin{itemize}
-		\item With 2-fold cross validation, we obtained a very good accuracy, namely of 91%.
-		\item The results from the "printcp" function seem to contradict this result, in the sense that this function shows that no matter how many nodes we include in our decision tree, there is no decision tree that fits the data.
-	\end{itemize}
-	
-	
-	
-	
+%\subsubsection*{Decision trees - what we have done so far}
+%	We have implemented decision trees using the package "rpart" from R and tested it on the \textbf{pre-processed} data, using the first \textbf{50 features} of the data set. \\
+%	As an \textbf{evaluation} of this classifier, we have used the following methods:
+%	\begin{itemize}
+%		\item 2-fold cross validation
+%		\item the "printcp" function available in the "rpart" package. This function gives the error from 10-fold cross validation performed on the data set, using different values for the number of nodes in the decision tree. 
+%	\end{itemize}
+%	The \textbf{results} we obtained are as follows:
+%	\begin{itemize}
+%		\item With 2-fold cross validation, we obtained a very good accuracy, namely of 91%.
+%		\item The results from the "printcp" function seem to contradict this result, in the sense that this function shows that no matter how many nodes we include in our decision tree, there is no decision tree that fits the data.
+%	\end{itemize}
+%
+%We have implemented decision trees using the package "rpart" from R and tested it on the \textbf{pre-processed} data, using the first \textbf{50 features} of the data set. To evaluate our implementation of decision trees we used the following approaches. Firstly we have performed a 2-fold cross validation by spliting the training set as previously described. Furthermore the "printcp" function available in the "rpart" package provides the error from a 10-fold corss validation performed on the data set. It computes decision trees with various number of nodes. 
+%
+%The results of this implementation are as follows. Using the 2-fold cross validation, we optained an accuracy of 91\%. Contary to this result, the outcomes of the "printcp" function seems to contradict this result. Based on these findins we infere that no matter how many nodes we include in our decision tree, there isn't a decision tree that will fit the data.
+
+We have implemented \textbf{decision trees} using the package "rpart" from R and tested it on the pre-processed data, using the first 50 features of the data set. \\
+\indent  In order to evaluate the performance of the algorithm, we have performed a 2-cross validation on the set. We have obtained a very good accuracy, namely of 91\%. However, the function "printcp" function available in the "rpart" package seems to contradict this result. The function gives the error from 10-fold cross validation performed on the data set, using different values for the number of nodes in the decision tree. With this classifier, we obtain an error greater than 100\%, meaning that no matter how many nodes we include in our decision tree, there is no decision tree that fits the data (our current interpretation).
 
 \section*{What we plan on doing:}
-\begin{itemize}
-	\item See which pre-processing techniques and features work best for different classifiers.
-	\item Familiarize ourselves with more classifiers.
-	\item Compare the performance of the classifiers with the criteria described below.
-\end{itemize}
 
-We plan experiment with a linear classification method, more exactly, employing logistic regression methods. If there is time, a look into a mixture of gaussians to model the date will be attempted. 
+We plan to experiment with a linear classification method, more exactly, employing logistic regression. If there is time, a look into a mixture of gaussians to model the date will be attempted. 
 
-\subsection*{Decision trees - what we plan on doing}
- 	From the \textbf{data set} point of view, our goals are the following:
- 	\begin{itemize}
- 		\item  use the same functions on the \textbf{unprocessed} data (since decision trees can handle missing data and categorical data)
- 		\item use \textbf{all the features} of the data set
- 		\item perform cross-validation using \textbf{more folds}.
- 	\end{itemize}
-In what concerns the \textbf{methods} we want to use, our main goal is to use the classifiers we obtained at the previous step in \textbf{ensemble} methods, such as \textbf{random forests}, \textbf{bagging} and \textbf{boosting}. We plan to use the built-in function in R, such as "cforest" and also experiment with the same functions in Weka.
+With respect to \textbf{decision trees}, we firstly want to see the performance of the classifier on the unprocessed data, given that decision trees can handle missing data and categorical data. Our next goals are to  use all the features of the data set and perform cross-validation using more folds. \\
 
-
-
-
+In what concerns the methods we want to use, our main goal is to use the classifiers we obtained at the previous step in \textbf{ensemble} methods, such as \textbf{random forests}, \textbf{bagging} and \textbf{boosting}. We plan to use the built-in function in R, such as "cforest" and also experiment with the same functions in Weka.
 
 \section*{What comparisons we want to run:}
 
-\begin{itemize}
-	\item Perform 5-fold cross-validation on the training set and do final evaluation on the test set.
-	\item For each classifier we store their accuracy, confusion matrix, ROC curve and AUC.
-\end{itemize}
+To evaluate the performance of our algorithms on the data set we are aiming at running a  5-fold cross-validation on the training set and then run a final evaluation on the test set. For each classifier we are going to store their accuracy, confusion matrix, ROC curve and AUC.
 
 \end{document}
