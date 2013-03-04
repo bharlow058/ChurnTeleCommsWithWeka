@@ -162,17 +162,17 @@ dme.attachLabels <- function(data=TRUE){
   print("[IMPORT] Done importing churn!")
     
   print("[IMPORT] Importing .appetency column to a new dataframe")
-  train.appatency <-read.delim("../dataset/orange_small_train_appetency.labels", , header=FALSE, sep="\n", fill=FALSE)
+  train.appetency <-read.delim("../dataset/orange_small_train_appetency.labels", , header=FALSE, sep="\n", fill=FALSE)
   print("[IMPORT] Done importing appetency!")
     
   print("[IMPORT] Importing .upselling column to a new dataframe")
   train.upselling <-read.delim("../dataset/orange_small_train_upselling.labels", , header=FALSE, sep="\n", fill=FALSE)
   print("[IMPORT] Done importing upselling")
       
-  answer <- data.frame(churn=integer(50000), appatency=integer(50000), upselling=integer(50000))
+  answer <- data.frame(churn=integer(50000), appetency=integer(50000), upselling=integer(50000))
   
   answer$churn <- train.churn[,]
-  answer$appatency <- train.appatency[,]
+  answer$appetency <- train.appetency[,]
   answer$upselling <- train.upselling[,]
   
   if(data == TRUE){
@@ -284,4 +284,10 @@ dme.splitData <- function(data, labels) {
   list(TrainData=trainData, TestData=testData, TrainLabels=trainLabels, TestLabels=testLabels)
 }
 
+dme.attachLabelsToData <- function(data, labels) {
+  data$churn = labels$churn
+  data$appetency = labels$appetency
+  data$upselling = labels$upselling
+  return (data)
+}
 
