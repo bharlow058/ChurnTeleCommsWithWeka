@@ -39,6 +39,7 @@ dme.importData <- function(data, csv=FALSE, binary=FALSE){
 
 dme.exportARFF <- function(data, name){
   name = paste("../dataset/", name,".arff", sep="")
+  library('foreign')
   write.arff(data, name)
   print(paste("[EXPORT] File written to: ",name, "\n",sep=""))
 }
@@ -153,7 +154,7 @@ dme.doAverage <- function(orange.train.AVG, range=FALSE, binary=FALSE){
 # @data - data.frame (the labels are added to the data.frame)
 # @return - data.frame (data.frame)
 
-dme.attachLabels <- function(data=TRUE){
+dme.attachLabels <- function(data){
     
   # Extracting the churn, appetency, upselling from the .label files
     
@@ -162,23 +163,29 @@ dme.attachLabels <- function(data=TRUE){
   print("[IMPORT] Done importing churn!")
     
   print("[IMPORT] Importing .appetency column to a new dataframe")
-  train.appatency <-read.delim("../dataset/orange_small_train_appetency.labels", , header=FALSE, sep="\n", fill=FALSE)
+  train.appetency <-read.delim("../dataset/orange_small_train_appetency.labels", , header=FALSE, sep="\n", fill=FALSE)
   print("[IMPORT] Done importing appetency!")
     
   print("[IMPORT] Importing .upselling column to a new dataframe")
   train.upselling <-read.delim("../dataset/orange_small_train_upselling.labels", , header=FALSE, sep="\n", fill=FALSE)
   print("[IMPORT] Done importing upselling")
       
-  answer <- data.frame(churn=integer(50000), appatency=integer(50000), upselling=integer(50000))
+  answer <- data.frame(churn=integer(50000), appetency=integer(50000), upselling=integer(50000))
   
   answer$churn <- train.churn[,]
-  answer$appatency <- train.appatency[,]
+  answer$appetency <- train.appetency[,]
   answer$upselling <- train.upselling[,]
+
+  data$churn <- answer$churn
+  data$appetency <- answer$appetency
+  data$upselling <- answer$upselling
+
+  return(data)
   
-  if(data == TRUE){
-    print("The data has been returned\n")
-    return(answer)  
-  }
+  #if(data == TRUE){
+  #  print("The data has been returned\n")
+  #  return(answer)  
+  #}
 }
 
 dme.importTest <- function(data, csv=FALSE, binary=FALSE){
@@ -284,4 +291,10 @@ dme.splitData <- function(data, labels) {
   list(TrainData=trainData, TestData=testData, TrainLabels=trainLabels, TestLabels=testLabels)
 }
 
+dme.attachLabelsToData <- function(data, labels) {
+  data$churn = labels$churn
+  data$appetency = labels$appetency
+  data$upselling = labels$upselling
+  return (data)
+}
 
