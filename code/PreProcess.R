@@ -22,3 +22,10 @@ features1 <- cutoff.k(weights_chi, 6);
 # Subset Selection Method for feature selection 
 # These methods should return higher quality subsets of features than the previous ones
 features2 <- cfs(fmlaChurn, orange.train.AVG.labels);
+
+# Principal Component Analysis
+orange.train.AVG_pca <- prcomp(orange.train.AVG)
+
+# Rotation matrix: rows = PC components, columns = Vars
+principalFeature <- as.matrix(orange.train.AVG) * orange.train.AVG_pca$rotation[,1];
+
