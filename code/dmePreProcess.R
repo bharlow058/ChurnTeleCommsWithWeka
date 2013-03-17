@@ -38,7 +38,7 @@ dme.importData <- function(data, csv=FALSE, binary=FALSE){
 # @name - string (the name of the file where the data will be exported)
 
 dme.exportARFF <- function(data, name){
-  name = paste("../dataset/", name,".arff", sep="")
+  name = paste("../dataset/WEKA/", name,".arff", sep="")
   library('foreign')
   write.arff(data, name)
   print(paste("[EXPORT] File written to: ",name, "\n",sep=""))
@@ -68,7 +68,8 @@ dme.importCSV <- function(name){
   return(data.file)
 }
 
-# Convert all data values which are NA to 0
+# Convert empty strings to NA
+# Convert strings to integer values
 #
 # @orange.train.NA       - data.frame (the data.frame to preprocess)
 # @binary     - boolean (exporting the data to a binary format)
@@ -83,7 +84,7 @@ dme.convertNA <- function(orange.train.NA, binary=FALSE){
 	}
   
   # For numeric values we are converting all of them to 0
-	orange.train.NA[is.na(orange.train.NA)] <- 0; # Convert all NA's to 0's
+	# orange.train.NA[is.na(orange.train.NA)] <- 0; # Convert all NA's to 0's
   print("[PREPROCESS] Data has been cleaned!\n")
   
   if(binary == TRUE){
@@ -110,6 +111,7 @@ dme.groupCats <- function(data, minCatFreq) {
   return(data)
 }
 
+# Replace NAs with 0s
 # Replace all numeric data which are 0 to the average
 #
 # @data   - data.frame ( the data.frame to preprocess)
@@ -118,6 +120,8 @@ dme.groupCats <- function(data, minCatFreq) {
 # @return - data.frame ( the data.frame with the mean replacing the zeros)
 
 dme.doAverage <- function(orange.train.AVG, range=FALSE, binary=FALSE){
+  
+  orange.train.AVG[is.na(orange.train.AVG)] <- 0; # Convert all NA's to 0's
   
   print("[PREPROCESS] Normalizing the data by the mean...")
   for(i in 1:length(orange.train.AVG)){
