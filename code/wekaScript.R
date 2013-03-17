@@ -21,8 +21,3 @@ NBeval <- evaluate_Weka_classifier(NBModel, reducedTest,
 # Using the extracted features from PreProcess.r to reduce the dimensionality of the data
 reducedTrain <- train[,union(features1,union(features2,c("churn","appetency","upselling")))]
 reducedTest <- test[,union(features1,union(features2,c("churn","appetency","upselling")))]
-
-
-
-
-
