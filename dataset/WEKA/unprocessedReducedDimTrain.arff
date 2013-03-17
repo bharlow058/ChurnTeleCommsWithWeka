@@ -1,4 +1,4 @@
-@relation data-weka.filters.unsupervised.attribute.NumericToNominal-R30-34-weka.filters.unsupervised.attribute.NumericToNominal-R13-16-weka.filters.unsupervised.instance.RemovePercentage-P80.0-V
+@relation data-weka.filters.unsupervised.attribute.NumericToNominal-R30-34-weka.filters.unsupervised.attribute.NumericToNominal-R13-16-weka.filters.unsupervised.instance.RemovePercentage-P80.0-V-weka.filters.unsupervised.attribute.NumericToNominal-R35-36
 
 @attribute Var12 numeric
 @attribute Var19 numeric
@@ -34,8 +34,8 @@
 @attribute Var227 {1,2,3,4,5,6,7}
 @attribute Var228 {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30}
 @attribute churn {-1,1}
-@attribute appetency numeric
-@attribute upselling numeric
+@attribute appetency {-1,1}
+@attribute upselling {-1,1}
 
 @data
 ?,?,?,?,?,117625.6,8,?,?,?,?,?,38,1,10,1,?,?,?,?,?,?,?,?,?,?,?,?,?,1,76,5,14,-1,-1,-1
