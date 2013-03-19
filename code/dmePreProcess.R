@@ -38,7 +38,7 @@ dme.importData <- function(data, csv=FALSE, binary=FALSE){
 # @name - string (the name of the file where the data will be exported)
 
 dme.exportARFF <- function(data, name){
-  name = paste("../dataset/WEKA/", name,".arff", sep="")
+  name = paste("../dataset/Balanced/", name,".arff", sep="")
   library('foreign')
   write.arff(data, name)
   print(paste("[EXPORT] File written to: ",name, "\n",sep=""))
