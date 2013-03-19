@@ -1,4 +1,5 @@
-@relation data
+@relation data-weka.filters.unsupervised.attribute.NumericToNominal-R13-17
+
 @attribute Var12 numeric
 @attribute Var19 numeric
 @attribute Var53 numeric
@@ -11,11 +12,12 @@
 @attribute Var139 numeric
 @attribute Var161 numeric
 @attribute Var188 numeric
-@attribute Var193 numeric
-@attribute Var203 numeric
-@attribute Var207 numeric
-@attribute Var218 numeric
-@attribute churn numeric
+@attribute Var193 {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51}
+@attribute Var203 {1,2,3,4,5}
+@attribute Var207 {1,2,3,4,5,6,7,8,9,10,11,12,13,14}
+@attribute Var218 {1,2}
+@attribute churn {-1,1}
+
 @data
 ?,?,?,?,?,117625.6,8,?,?,?,?,?,38,1,10,1,-1
 ?,?,?,?,?,-356411.6,?,?,?,?,?,?,38,1,10,?,1
@@ -10929,7 +10931,7 @@
 ?,?,?,?,?,153792.4,?,?,?,?,?,?,38,4,10,2,-1
 ?,?,?,?,?,-115307.6,?,?,?,?,?,?,2,1,10,2,-1
 ?,?,?,?,?,490260,-22,?,?,?,?,?,38,1,10,2,-1
-?,?,?,?,59118.36,-9e+05,-14,?,?,319438,?,?,38,1,10,2,1
+?,?,?,?,59118.36,-900000,-14,?,?,319438,?,?,38,1,10,2,1
 ?,?,0,14,?,0,?,?,0,?,?,?,13,1,9,1,1
 ?,?,?,?,?,118534.4,?,?,?,?,?,?,38,1,10,1,-1
 ?,?,?,?,?,246242.4,4,?,?,?,?,?,38,1,10,1,-1
